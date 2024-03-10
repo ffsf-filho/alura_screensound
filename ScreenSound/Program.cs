@@ -1,12 +1,15 @@
-﻿using ScreenSound.Menus;
+﻿using ScreenSound.Banco;
+using ScreenSound.Menus;
 using ScreenSound.Modelos;
-using ScreenSound.Banco;
-using Microsoft.Data.SqlClient;
 
 try
 {
-    Connection connection= new();
-    IEnumerable<Artista> listaArtistas = connection.Listar();
+    ArtistaDAL artistaDAL = new();
+    Artista novoArtista = new("Foo Fighters", "Foo Fighters é uma banda de rock alternativo americana formada por Dave Grohl em 1995.");
+
+    artistaDAL.Adicionar(novoArtista);
+
+    IEnumerable<Artista> listaArtistas = artistaDAL.Listar();
 
     foreach (Artista artista in listaArtistas)
     {
@@ -70,7 +73,7 @@ void ExibirOpcoesDoMenu()
         Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
         menuASerExibido.Executar(artistasRegistrados);
         if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
-    } 
+    }
     else
     {
         Console.WriteLine("Opção inválida");

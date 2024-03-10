@@ -12,40 +12,4 @@ internal class Connection
     {
         return new SqlConnection(connectionString);
     }
-
-    public IEnumerable<Artista> Listar()
-    {
-        List<Artista> lista = new();
-
-        try
-        {
-            string sql = "SELECT * FROM Artistas";
-            
-            using SqlConnection connection = ObterConexao();
-            connection.Open();
-
-            SqlCommand command = new(sql, connection);
-            using SqlDataReader dataReader = command.ExecuteReader();
-           
-            while (dataReader.Read())
-            {
-                string? nomeArtista = Convert.ToString(dataReader["Nome"]);
-                string? bioArtista = Convert.ToString(dataReader["Bio"]);
-                int idArtista = Convert.ToInt32(dataReader["Id"]);
-
-                Artista artista = new(nomeArtista, bioArtista)
-                {
-                    Id = idArtista
-                };
-
-                lista.Add(artista);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-
-        return lista;
-    }
 }
