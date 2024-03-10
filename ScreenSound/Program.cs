@@ -5,9 +5,13 @@ using Microsoft.Data.SqlClient;
 
 try
 {
-    using SqlConnection connection = new Connection().ObterConexao();
-    connection.Open();
-    Console.WriteLine(connection.State);
+    Connection connection= new();
+    IEnumerable<Artista> listaArtistas = connection.Listar();
+
+    foreach (Artista artista in listaArtistas)
+    {
+        Console.WriteLine(artista);
+    }
 }
 catch (Exception ex)
 {
@@ -16,19 +20,23 @@ catch (Exception ex)
 
 return;
 
-Artista ira = new Artista("Ira!", "Banda Ira!");
+Artista ira = new("Ira!", "Banda Ira!");
 Artista beatles = new("The Beatles", "Banda The Beatles");
 
-Dictionary<string, Artista> artistasRegistrados = new();
-artistasRegistrados.Add(ira.Nome, ira);
-artistasRegistrados.Add(beatles.Nome, beatles);
+Dictionary<string, Artista> artistasRegistrados = new()
+{
+    { ira.Nome, ira },
+    { beatles.Nome, beatles }
+};
 
-Dictionary<int, Menu> opcoes = new();
-opcoes.Add(1, new MenuRegistrarArtista());
-opcoes.Add(2, new MenuRegistrarMusica());
-opcoes.Add(3, new MenuMostrarArtistas());
-opcoes.Add(4, new MenuMostrarMusicas());
-opcoes.Add(-1, new MenuSair());
+Dictionary<int, Menu> opcoes = new()
+{
+    { 1, new MenuRegistrarArtista() },
+    { 2, new MenuRegistrarMusica() },
+    { 3, new MenuMostrarArtistas() },
+    { 4, new MenuMostrarMusicas() },
+    { -1, new MenuSair() }
+};
 
 void ExibirLogo()
 {
