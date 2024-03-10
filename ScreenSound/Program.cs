@@ -5,9 +5,9 @@ using ScreenSound.Modelos;
 try
 {
     ArtistaDAL artistaDAL = new();
-    Artista novoArtista = new("Foo Fighters", "Foo Fighters é uma banda de rock alternativo americana formada por Dave Grohl em 1995.");
+    //Artista novoArtista = new("Foo Fighters", "Foo Fighters é uma banda de rock alternativo americana formada por Dave Grohl em 1995.");
 
-    artistaDAL.Adicionar(novoArtista);
+    //artistaDAL.Adicionar(novoArtista);
 
     IEnumerable<Artista> listaArtistas = artistaDAL.Listar();
 
