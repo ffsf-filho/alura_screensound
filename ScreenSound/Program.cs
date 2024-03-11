@@ -4,14 +4,23 @@ using ScreenSound.Modelos;
 
 try
 {
-    ArtistaDAL artistaDAL = new();
-    //Artista novoArtista = new("Foo Fighters", "Foo Fighters é uma banda de rock alternativo americana formada por Dave Grohl em 1995.");
+    ScreenSoundContext context = new();
+    ArtistaDAL artistaDAL = new(context);
 
+    //Artista novoArtista = new("Foo Fighters", "Foo Fighters é uma banda de rock alternativo americana formada por Dave Grohl em 1995.");
+    //Artista novoArtista = new("Gilberto Gil", "Gilberto Passos Gil Moreira é um cantor, compositor, multi - instrumentista, produtor musical, político e escritor brasileiro.");
+    //Artista novoArtista = new("Tim Maia", "Excelente cantor.");
     //artistaDAL.Adicionar(novoArtista);
 
-    IEnumerable<Artista> listaArtistas = artistaDAL.Listar();
+    //Artista alteraArtista = new("Gilberto Gil", "Gilberto Passos Gil Moreira é um cantor, compositor, multi - instrumentista.") { 
+    //    Id = 2
+    //};
+    //artistaDAL.Atualizar(alteraArtista);
 
-    foreach (Artista artista in listaArtistas)
+    //Artista apagaArtista = new("Tim Maia", "Excelente cantor.") { Id = 3};
+    //artistaDAL.Deletar(apagaArtista);
+
+    foreach (Artista artista in artistaDAL.Listar())
     {
         Console.WriteLine(artista);
     }
