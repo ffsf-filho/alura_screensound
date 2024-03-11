@@ -24,6 +24,10 @@ try
     {
         Console.WriteLine(artista);
     }
+
+    Console.WriteLine("=================================================");
+
+    Console.WriteLine(artistaDAL.RecuperarPeloNome("Djavan"));
 }
 catch (Exception ex)
 {
