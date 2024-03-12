@@ -2,48 +2,8 @@
 using ScreenSound.Menus;
 using ScreenSound.Modelos;
 
-try
-{
-    ScreenSoundContext context = new();
-    ArtistaDAL artistaDAL = new(context);
-
-    //Artista novoArtista = new("Foo Fighters", "Foo Fighters é uma banda de rock alternativo americana formada por Dave Grohl em 1995.");
-    //Artista novoArtista = new("Gilberto Gil", "Gilberto Passos Gil Moreira é um cantor, compositor, multi - instrumentista, produtor musical, político e escritor brasileiro.");
-    //Artista novoArtista = new("Tim Maia", "Excelente cantor.");
-    //artistaDAL.Adicionar(novoArtista);
-
-    //Artista alteraArtista = new("Gilberto Gil", "Gilberto Passos Gil Moreira é um cantor, compositor, multi - instrumentista.") { 
-    //    Id = 2
-    //};
-    //artistaDAL.Atualizar(alteraArtista);
-
-    //Artista apagaArtista = new("Tim Maia", "Excelente cantor.") { Id = 3};
-    //artistaDAL.Deletar(apagaArtista);
-
-    foreach (Artista artista in artistaDAL.Listar())
-    {
-        Console.WriteLine(artista);
-    }
-
-    Console.WriteLine("=================================================");
-
-    Console.WriteLine(artistaDAL.RecuperarPeloNome("Djavan"));
-}
-catch (Exception ex)
-{
-    Console.WriteLine(ex.Message);
-}
-
-return;
-
-Artista ira = new("Ira!", "Banda Ira!");
-Artista beatles = new("The Beatles", "Banda The Beatles");
-
-Dictionary<string, Artista> artistasRegistrados = new()
-{
-    { ira.Nome, ira },
-    { beatles.Nome, beatles }
-};
+ScreenSoundContext context = new();
+ArtistaDAL artistaDAL = new(context);
 
 Dictionary<int, Menu> opcoes = new()
 {
@@ -84,7 +44,7 @@ void ExibirOpcoesDoMenu()
     if (opcoes.ContainsKey(opcaoEscolhidaNumerica))
     {
         Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
-        menuASerExibido.Executar(artistasRegistrados);
+        menuASerExibido.Executar(artistaDAL);
         if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
     }
     else

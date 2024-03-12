@@ -1,10 +1,11 @@
-﻿using ScreenSound.Modelos;
+﻿using ScreenSound.Banco;
+using ScreenSound.Modelos;
 
 namespace ScreenSound.Menus;
 
 internal class Menu
 {
-    public void ExibirTituloDaOpcao(string titulo)
+    public static void ExibirTituloDaOpcao(string titulo)
     {
         int quantidadeDeLetras = titulo.Length;
         string asteriscos = string.Empty.PadLeft(quantidadeDeLetras, '*');
@@ -12,7 +13,7 @@ internal class Menu
         Console.WriteLine(titulo);
         Console.WriteLine(asteriscos + "\n");
     }
-    public virtual void Executar(Dictionary<string, Artista> nusicasRegistradas)
+    public virtual void Executar(ArtistaDAL artistaDAL)
     {
         Console.Clear();
     }
