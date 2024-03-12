@@ -4,22 +4,17 @@ using ScreenSound.Modelos;
 
 namespace ScreenSound.Banco;
 
-internal class ArtistaDAL
+internal class ArtistaDAL(ScreenSoundContext context)
 {
-    private readonly ScreenSoundContext _context;
-
-    public ArtistaDAL(ScreenSoundContext context)
-    {
-        this._context = context;
-    }
+    private readonly ScreenSoundContext _context = context;
 
     public IEnumerable<Artista> Listar()
     {
-        List<Artista> lista = new();
+        List<Artista> lista = [];
 
         try
         {
-            lista = _context.Artistas.ToList();
+            lista = [.. _context.Artistas];
         }
         catch (Exception ex)
         {

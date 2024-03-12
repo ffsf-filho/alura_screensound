@@ -41,9 +41,9 @@ void ExibirOpcoesDoMenu()
     string opcaoEscolhida = Console.ReadLine()!;
     int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
 
-    if (opcoes.ContainsKey(opcaoEscolhidaNumerica))
+    if (opcoes.TryGetValue(opcaoEscolhidaNumerica, out Menu? value))
     {
-        Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
+        Menu menuASerExibido = value;
         menuASerExibido.Executar(artistaDAL);
         if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
     }
