@@ -2,7 +2,7 @@
 
 internal class Artista(string nome, string bio)
 {
-    private List<Musica> Musicas { get; set; }
+    public ICollection<Musica> Musicas { get; set; } = new List<Musica>();
 
     public string Nome { get; set; } = nome;
     public string FotoPerfil { get; set; } = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png";
