@@ -74,5 +74,21 @@
 
             return artista;
         }
+
+        public IEnumerable<T>? ListarPor(Func<T, bool> condicao)
+        {
+            IEnumerable<T>? lista = null;
+
+            try
+            {
+                lista = [.. _context.Set<T>().Where( condicao)];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return lista;
+        }
     }
 }

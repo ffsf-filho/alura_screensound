@@ -11,6 +11,7 @@ Dictionary<int, Menu> opcoes = new()
     { 2, new MenuRegistrarMusica() },
     { 3, new MenuMostrarArtistas() },
     { 4, new MenuMostrarMusicas() },
+    { 5, new MenuMostrarMusicasPorAno() },
     { -1, new MenuSair() }
 };
 
@@ -35,6 +36,7 @@ void ExibirOpcoesDoMenu()
     Console.WriteLine("Digite 2 para registrar a música de um artista");
     Console.WriteLine("Digite 3 para mostrar todos os artistas");
     Console.WriteLine("Digite 4 para exibir todas as músicas de um artista");
+    Console.WriteLine("Digite 5 para exibir as músicas por ano de lançamento");
     Console.WriteLine("Digite -1 para sair");
 
     Console.Write("\nDigite a sua opção: ");
