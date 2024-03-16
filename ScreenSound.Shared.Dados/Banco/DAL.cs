@@ -59,13 +59,13 @@
             }
         }
 
-        public T? RecuperarPor(Func<T, bool> condicao)
+        public IEnumerable<T>? RecuperarPor(Func<T, bool> condicao)
         {
-            T? artista = null;
+            List<T>? artista = null;
 
             try
             {
-                artista = _context.Set<T>().FirstOrDefault(condicao);
+                artista = [.. _context.Set<T>().Where(condicao)];
             }
             catch (Exception ex)
             {
