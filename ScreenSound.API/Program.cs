@@ -58,4 +58,23 @@ app.MapDelete("/Artistas/{id}", ([FromServices] DAL<Artista> dal, int id) =>
     return Results.NoContent();
 });
 
+app.MapPut("/Artistas", ([FromServices] DAL<Artista> dal, [FromBody] Artista artista) =>
+{
+    List<Artista> listaArtista = [.. dal.RecuperarPor(a => a.Id == artista.Id)];
+
+    if (listaArtista.Count == 0)
+    {
+        return Results.NotFound();
+    }
+
+    Artista artistaAtualizar = listaArtista[0];
+    artistaAtualizar.Nome = artista.Nome;
+    artistaAtualizar.Bio = artista.Bio;
+    artistaAtualizar.FotoPerfil = artista.FotoPerfil;
+
+    dal.Atualizar(artistaAtualizar);
+
+    return Results.Ok(artistaAtualizar);
+});
+
 app.Run();
