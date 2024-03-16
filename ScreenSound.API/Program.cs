@@ -35,4 +35,11 @@ app.MapGet("/Artistas/{nome}", (string nome) =>
     return Results.Ok(artista);
 });
 
+app.MapPost("Artistas", ([FromBody] Artista artista) =>
+{
+    DAL<Artista> dal = new(new ScreenSoundContext());
+    dal.Adicionar(artista);
+    return Results.Ok();
+});
+
 app.Run();
