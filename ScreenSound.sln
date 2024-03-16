@@ -5,7 +5,11 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenSound", "ScreenSound\ScreenSound.csproj", "{A9CCE41C-6657-42BF-AED4-F3F578033037}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.API", "ScreenSound.API\ScreenSound.API.csproj", "{FD57B280-D79B-45FE-A900-6A1C53486D21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenSound.API", "ScreenSound.API\ScreenSound.API.csproj", "{FD57B280-D79B-45FE-A900-6A1C53486D21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.Shared.Modelos", "ScreenSound.Shared.Modelos\ScreenSound.Shared.Modelos.csproj", "{256CBDE9-AE1A-496F-BF27-F1A8980092BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.Shared.Dados", "ScreenSound.Shared.Dados\ScreenSound.Shared.Dados.csproj", "{EE653320-F90F-4038-B43F-572DB3AC77DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{FD57B280-D79B-45FE-A900-6A1C53486D21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD57B280-D79B-45FE-A900-6A1C53486D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD57B280-D79B-45FE-A900-6A1C53486D21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{256CBDE9-AE1A-496F-BF27-F1A8980092BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{256CBDE9-AE1A-496F-BF27-F1A8980092BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{256CBDE9-AE1A-496F-BF27-F1A8980092BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{256CBDE9-AE1A-496F-BF27-F1A8980092BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE653320-F90F-4038-B43F-572DB3AC77DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE653320-F90F-4038-B43F-572DB3AC77DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE653320-F90F-4038-B43F-572DB3AC77DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE653320-F90F-4038-B43F-572DB3AC77DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
