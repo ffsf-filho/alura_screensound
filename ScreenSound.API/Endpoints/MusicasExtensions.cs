@@ -7,7 +7,7 @@ public static class MusicasExtensions
 {
     public static void AddEndpointsMusicas(this WebApplication app)
     {
-        app.MapGet("/Musica", ([FromServices] DAL<Musica> dal) =>
+        app.MapGet("/Musicas", ([FromServices] DAL<Musica> dal) =>
         {
             IEnumerable<Musica> listaDeMusicas = dal.Listar();
 
@@ -19,7 +19,7 @@ public static class MusicasExtensions
             return Results.Ok(listaDeMusicas);
         });
 
-        app.MapGet("Musica/{nome}", ([FromServices] DAL<Musica> dal, string nome) =>
+        app.MapGet("Musicas/{nome}", ([FromServices] DAL<Musica> dal, string nome) =>
         {
             List<Musica> listaDemusica = [.. dal.RecuperarPor(a => a.Nome.ToUpper().Equals(nome.ToUpper()))]!;
 
@@ -31,13 +31,13 @@ public static class MusicasExtensions
             return Results.Ok(listaDemusica);
         });
 
-        app.MapPost("/Musica", ([FromServices] DAL<Musica> dal, [FromBody] Musica musica) =>
+        app.MapPost("/Musicas", ([FromServices] DAL<Musica> dal, [FromBody] Musica musica) =>
         {
             dal.Adicionar(musica);
             return Results.Ok();
         });
 
-        app.MapPut("/Musica", ([FromServices] DAL<Musica> dal, [FromBody] Musica musica) =>
+        app.MapPut("/Musicas", ([FromServices] DAL<Musica> dal, [FromBody] Musica musica) =>
         {
             List<Musica> listaDeMusicas = [.. dal.RecuperarPor(a => a.Id == musica.Id)];
 
@@ -56,7 +56,7 @@ public static class MusicasExtensions
             return Results.Ok(musicaAtualizar);
         });
 
-        app.MapDelete("/Musica/{id}", ([FromServices] DAL<Musica> dal, int id) =>
+        app.MapDelete("/Musicas/{id}", ([FromServices] DAL<Musica> dal, int id) =>
         {
             List<Musica> listaDeMusicas = [.. dal.RecuperarPor(a => a.Id == id)];
 
