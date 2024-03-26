@@ -43,9 +43,9 @@ public static class MusicasExtensions
             return Results.Ok();
         });
 
-        app.MapPut("/Musicas", ([FromServices] DAL<Musica> dal, [FromBody] Musica musica) =>
+        app.MapPut("/Musicas", ([FromServices] DAL<Musica> dal, [FromBody] Musica musicaRequestEdit) =>
         {
-            List<Musica> listaDeMusicas = [.. dal.RecuperarPor(a => a.Id == musica.Id)];
+            List<Musica> listaDeMusicas = [.. dal.RecuperarPor(a => a.Id == musicaRequestEdit.Id)];
 
             if (listaDeMusicas.Count == 0)
             {
@@ -53,9 +53,9 @@ public static class MusicasExtensions
             }
 
             Musica musicaAtualizar = listaDeMusicas[0];
-            musicaAtualizar.Artista = musica.Artista;
-            musicaAtualizar.AnoLancamento = musica.AnoLancamento;
-            musicaAtualizar.Nome = musica.Nome;
+            //musicaAtualizar.Artista = musicaRequestEdit.Artista;
+            musicaAtualizar.AnoLancamento = musicaRequestEdit.AnoLancamento;
+            musicaAtualizar.Nome = musicaRequestEdit.Nome;
 
             dal.Atualizar(musicaAtualizar);
 

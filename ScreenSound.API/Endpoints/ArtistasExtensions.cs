@@ -55,9 +55,9 @@ public static class ArtistasExtensions
             return Results.NoContent();
         });
 
-        app.MapPut("/Artistas", ([FromServices] DAL<Artista> dal, [FromBody] Artista artista) =>
+        app.MapPut("/Artistas", ([FromServices] DAL<Artista> dal, [FromBody] Artista artistaRequestEdit) =>
         {
-            List<Artista> listaArtista = [.. dal.RecuperarPor(a => a.Id == artista.Id)];
+            List<Artista> listaArtista = [.. dal.RecuperarPor(a => a.Id == artistaRequestEdit.Id)];
 
             if (listaArtista.Count == 0)
             {
@@ -65,9 +65,9 @@ public static class ArtistasExtensions
             }
 
             Artista artistaAtualizar = listaArtista[0];
-            artistaAtualizar.Nome = artista.Nome;
-            artistaAtualizar.Bio = artista.Bio;
-            artistaAtualizar.FotoPerfil = artista.FotoPerfil;
+            artistaAtualizar.Nome = artistaRequestEdit.Nome;
+            artistaAtualizar.Bio = artistaRequestEdit.Bio;
+            //artistaAtualizar.FotoPerfil = artistaRequestEdit.FotoPerfil;
 
             dal.Atualizar(artistaAtualizar);
 
