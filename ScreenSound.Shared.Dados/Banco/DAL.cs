@@ -1,94 +1,93 @@
-﻿namespace ScreenSound.Banco
+﻿namespace ScreenSound.Banco;
+
+public class DAL<T>(ScreenSoundContext context) where T : class
 {
-    public class DAL<T>(ScreenSoundContext context) where T : class
+    protected readonly ScreenSoundContext _context = context;
+
+    public IEnumerable<T> Listar()
     {
-        protected readonly ScreenSoundContext _context = context;
+        List<T> lista = [];
 
-        public IEnumerable<T> Listar()
+        try
         {
-            List<T> lista = [];
-
-            try
-            {
-                lista = [.. _context.Set<T>()];
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}");
-            }
-
-            return lista;
+            lista = [.. _context.Set<T>()];
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message}");
         }
 
-        public void Adicionar(T objeto)
+        return lista;
+    }
+
+    public void Adicionar(T objeto)
+    {
+        try
         {
-            try
-            {
-                _context.Set<T>().Add(objeto);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}");
-            }
+            _context.Set<T>().Add(objeto);
+            _context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message}");
+        }
+    }
+
+    public void Atualizar(T objeto)
+    {
+        try
+        {
+            _context.Set<T>().Update(objeto);
+            _context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message}");
+        }
+    }
+
+    public void Deletar(T objeto)
+    {
+        try
+        {
+            _context.Set<T>().Remove(objeto);
+            _context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message}");
+        }
+    }
+
+    public T? RecuperarPor(Func<T, bool> condicao)
+    {
+        T? retorno = null;
+
+        try
+        {
+            retorno = _context.Set<T>().FirstOrDefault(condicao);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
 
-        public void Atualizar(T objeto)
+        return retorno;
+    }
+
+    public IEnumerable<T>? ListarPor(Func<T, bool> condicao)
+    {
+        IEnumerable<T>? lista = null;
+
+        try
         {
-            try
-            {
-                _context.Set<T>().Update(objeto);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}");
-            }
+            lista = [.. _context.Set<T>().Where( condicao)];
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
 
-        public void Deletar(T objeto)
-        {
-            try
-            {
-                _context.Set<T>().Remove(objeto);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}");
-            }
-        }
-
-        public IEnumerable<T>? RecuperarPor(Func<T, bool> condicao)
-        {
-            List<T>? artista = null;
-
-            try
-            {
-                artista = [.. _context.Set<T>().Where(condicao)];
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return artista;
-        }
-
-        public IEnumerable<T>? ListarPor(Func<T, bool> condicao)
-        {
-            IEnumerable<T>? lista = null;
-
-            try
-            {
-                lista = [.. _context.Set<T>().Where( condicao)];
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return lista;
-        }
+        return lista;
     }
 }

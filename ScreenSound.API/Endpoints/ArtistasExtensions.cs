@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScreenSound.API.Requests;
+using ScreenSound.API.Response;
 using ScreenSound.Banco;
-using ScreenSound.Modelos;
+using ScreenSound.Shared.Modelos.Modelos;
 
 namespace ScreenSound.API.Endpoints;
 
@@ -11,26 +12,27 @@ public static class ArtistasExtensions
     {
         app.MapGet("/Artistas", ([FromServices] DAL<Artista> dal) =>
         {
-            IEnumerable<Artista> lista = dal.Listar();
+            IEnumerable<Artista> listaDeArtistas = dal.Listar();
 
-            if (lista is null)
+            if (listaDeArtistas is null)
             {
                 return Results.NotFound();
             }
+            List<ArtistaResponse> listaDeArtistaResponse = [.. EntityListToResponseList(listaDeArtistas)];
 
-            return Results.Ok(lista);
+            return Results.Ok(listaDeArtistaResponse);
         });
 
         app.MapGet("/Artistas/{nome}", ([FromServices] DAL<Artista> dal, string nome) =>
         {
-            List<Artista> artista = [.. dal.RecuperarPor(a => a.Nome.ToUpper().Equals(nome.ToUpper()))]!;
+            Artista artista = dal.RecuperarPor(a => a.Nome.ToUpper().Equals(nome.ToUpper()))!;
 
-            if (artista.Count == 0)
+            if (artista is null)
             {
                 return Results.NotFound();
             }
 
-            return Results.Ok(artista);
+            return Results.Ok(EntityToResponse(artista));
         });
 
         app.MapPost("/Artistas", ([FromServices] DAL<Artista> dal, [FromBody] ArtistaRequest artistaRequest) =>
@@ -42,14 +44,13 @@ public static class ArtistasExtensions
 
         app.MapDelete("/Artistas/{id}", ([FromServices] DAL<Artista> dal, int id) =>
         {
-            List<Artista> listaArtista = [.. dal.RecuperarPor(a => a.Id == id)];
+            Artista artista = dal.RecuperarPor(a => a.Id == id)!;
 
-            if (listaArtista.Count == 0)
+            if (artista is null)
             {
                 return Results.NotFound();
             }
 
-            Artista artista = listaArtista[0];
             dal.Deletar(artista);
 
             return Results.NoContent();
@@ -57,22 +58,30 @@ public static class ArtistasExtensions
 
         app.MapPut("/Artistas", ([FromServices] DAL<Artista> dal, [FromBody] Artista artistaRequestEdit) =>
         {
-            List<Artista> listaArtista = [.. dal.RecuperarPor(a => a.Id == artistaRequestEdit.Id)];
+            Artista artista = dal.RecuperarPor(a => a.Id == artistaRequestEdit.Id)!;
 
-            if (listaArtista.Count == 0)
+            if (artista is null)
             {
                 return Results.NotFound();
             }
 
-            Artista artistaAtualizar = listaArtista[0];
-            artistaAtualizar.Nome = artistaRequestEdit.Nome;
-            artistaAtualizar.Bio = artistaRequestEdit.Bio;
-            //artistaAtualizar.FotoPerfil = artistaRequestEdit.FotoPerfil;
+            artista.Nome = artistaRequestEdit.Nome;
+            artista.Bio = artistaRequestEdit.Bio;
+            //artista.FotoPerfil = artistaRequestEdit.FotoPerfil;
 
-            dal.Atualizar(artistaAtualizar);
+            dal.Atualizar(artista);
 
-            return Results.Ok(artistaAtualizar);
+            return Results.Ok(artista);
         });
+    }
 
+    private static ICollection<ArtistaResponse> EntityListToResponseList(IEnumerable<Artista> listaDeArtistas)
+    {
+        return listaDeArtistas.Select(a => EntityToResponse(a)).ToList();
+    }
+
+    private static ArtistaResponse EntityToResponse(Artista artista)
+    {
+        return new ArtistaResponse(artista.Id, artista.Nome, artista.Bio, artista.FotoPerfil);
     }
 }

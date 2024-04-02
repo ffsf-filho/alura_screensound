@@ -1,5 +1,5 @@
 ﻿using ScreenSound.Banco;
-using ScreenSound.Modelos;
+using ScreenSound.Shared.Modelos.Modelos;
 
 namespace ScreenSound.Menus;
 
@@ -10,7 +10,7 @@ internal class MenuRegistrarMusica : Menu
         base.Executar(artistaDAL);
         ExibirTituloDaOpcao("Registro de músicas");
         Console.Write("Digite o artista cuja música deseja registrar: ");
-        
+
         string nomeDoArtista = Console.ReadLine()!;
         Artista artistaRecuperado = artistaDAL.RecuperarPor(a => a.Nome.Equals(nomeDoArtista))!;
 
@@ -22,7 +22,7 @@ internal class MenuRegistrarMusica : Menu
             Console.Write("Agora digite o ano de laçamento da música: ");
             int anoLacamentoDaMusica = Convert.ToInt32(Console.ReadLine())!;
 
-            artistaRecuperado.AdicionarMusica(new Musica(tituloDaMusica) { AnoLancamento = anoLacamentoDaMusica});
+            artistaRecuperado.AdicionarMusica(new Musica(tituloDaMusica) { AnoLancamento = anoLacamentoDaMusica });
 
             Console.WriteLine($"A música {tituloDaMusica} de {nomeDoArtista} foi registrada com sucesso!");
 
