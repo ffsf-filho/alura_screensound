@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenSound", "ScreenSound\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenSound.API", "ScreenSound.API\ScreenSound.API.csproj", "{FD57B280-D79B-45FE-A900-6A1C53486D21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.Shared.Modelos", "ScreenSound.Shared.Modelos\ScreenSound.Shared.Modelos.csproj", "{256CBDE9-AE1A-496F-BF27-F1A8980092BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenSound.Shared.Modelos", "ScreenSound.Shared.Modelos\ScreenSound.Shared.Modelos.csproj", "{256CBDE9-AE1A-496F-BF27-F1A8980092BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.Shared.Dados", "ScreenSound.Shared.Dados\ScreenSound.Shared.Dados.csproj", "{EE653320-F90F-4038-B43F-572DB3AC77DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenSound.Shared.Dados", "ScreenSound.Shared.Dados\ScreenSound.Shared.Dados.csproj", "{EE653320-F90F-4038-B43F-572DB3AC77DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.Web", "ScreenSound.Web\ScreenSound.Web.csproj", "{635650ED-057B-42A9-8914-839756706C69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{EE653320-F90F-4038-B43F-572DB3AC77DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE653320-F90F-4038-B43F-572DB3AC77DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE653320-F90F-4038-B43F-572DB3AC77DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{635650ED-057B-42A9-8914-839756706C69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{635650ED-057B-42A9-8914-839756706C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{635650ED-057B-42A9-8914-839756706C69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{635650ED-057B-42A9-8914-839756706C69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
