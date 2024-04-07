@@ -10,6 +10,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddTransient<ArtistaAPI>();
 
 //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
 builder.Services.AddHttpClient("API", client =>
 {
 	client.BaseAddress = new Uri(builder.Configuration["APIServer:Url"]!);

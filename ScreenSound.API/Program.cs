@@ -14,6 +14,17 @@ builder.Services.AddDbContext<ScreenSoundContext>((options) =>
     .UseLazyLoadingProxies();
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyCorsPolicy", policy =>
+    {
+        policy.WithOrigins("https://localhost:7240")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+
+	});
+});
+
 builder.Services.AddTransient<DAL<Artista>>();
 builder.Services.AddTransient<DAL<Musica>>();
 builder.Services.AddTransient<DAL<Genero>>();
@@ -25,6 +36,7 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(
     options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 var app = builder.Build();
+app.UseCors("MyCorsPolicy");
 
 app.AddEndpointsArtistas();
 app.AddEndpointsMusicas();
