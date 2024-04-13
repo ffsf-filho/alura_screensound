@@ -23,7 +23,7 @@ public class ArtistasAPI(IHttpClientFactory factory)
 		await _httpClient.DeleteAsync($"Artistas/{artistaId}");
 	}
 
-	public async Task UpdateArtistaAsync(ArtistaResponse artista)
+	public async Task UpdateArtistaAsync(ArtistaRequestEdit artista)
 	{
 		await _httpClient.PutAsJsonAsync("Artistas", artista);
 	}

@@ -2,48 +2,54 @@
 @inject ArtistasAPI artistasAPI
 @inject NavigationManager navigationManager
 
-<MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8" Justify="Justify.Center">
-	<MudText Class="mt-8" Typo="Typo.h4">Edição de Artista</MudText>
-	<MudForm>
-		<MudTextField Class="mt-4" T="string" Placeholder="Nome do Artista"
-					  Variant="Variant.Outlined"
-					  @bind-Value="nome"
-					  Required="true"
-					  RequiredError="Campo obrigatório." />
+@if(Artista is not null)
+{
+	<MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8" Justify="Justify.Center">
+		<MudText Class="mt-8" Typo="Typo.h4">Edição de Artista</MudText>
+		<MudForm>
+			<MudTextField Class="mt-4" T="string" Placeholder="Nome do Artista"
+						  Variant="Variant.Outlined"
+						  @bind-Value="nome"
+						  Required="true"
+						  RequiredError="Campo obrigatório." />
 
-		<MudTextField Class="mt-4" T="string" Placeholder="Biografia do Artista"
-					  Variant="Variant.Outlined"
-					  @bind-Value="biografia"
-					  Lines="4"
-					  Required="true"
-					  RequiredError="Campo obrigatório." />
+			<MudTextField Class="mt-4" T="string" Placeholder="Biografia do Artista"
+						  Variant="Variant.Outlined"
+						  @bind-Value="biografia"
+						  Lines="4"
+						  Required="true"
+						  RequiredError="Campo obrigatório." />
 
-		<div class="d-flex align-center justify-space-between mt-4">
-			<MudButton Variant="Variant.Filled"
-					   @onclick="VoltarListaArtista"
-					   Color="Color.Secondary"
-					   Class="ml-auto">
-				Voltar
-			</MudButton>
+			<div class="d-flex align-center justify-space-between mt-4">
+				<MudButton Variant="Variant.Filled"
+						   @onclick="VoltarListaArtista"
+						   Color="Color.Info"
+						   Class="ml-3">
+					Voltar
+				</MudButton>
 
-			<MudButton Variant="Variant.Filled"
-					   Color="Color.Primary"
-					   Class="ml-auto"
-					   @onclick="Editar">
-				Salvar
-			</MudButton>
+				<MudButton Variant="Variant.Filled"
+						   Color="Color.Primary"
+						   Class="ml-auto"
+						   @onclick="Editar">
+					Salvar
+				</MudButton>
 
 
-			<MudButton Variant="Variant.Filled"
-					   @onclick="Deletar"
-					   Color="Color.Surface"
-					   Class="ml-auto">
-				Deletar
-			</MudButton>
-		</div>
-	</MudForm>
-</MudPaper>
-
+				<MudButton Variant="Variant.Filled"
+						   @onclick="Deletar"
+						   Color="Color.Secondary"
+						   Class="ml-3">
+					Deletar
+				</MudButton>
+			</div>
+		</MudForm>
+	</MudPaper>
+}
+else
+{
+	<MudProgressCircular Indeterminate="true"></MudProgressCircular>
+}
 
 @code {
 	private string? nome;
@@ -66,7 +72,8 @@
 	}
 	private async Task Editar()
 	{
-		await artistasAPI.UpdateArtistaAsync(Artista);
+		ArtistaRequestEdit requestEdit = new ArtistaRequestEdit(Artista!.Id, nome!, biografia!);
+		await artistasAPI.UpdateArtistaAsync(requestEdit);
 		navigationManager.NavigateTo("/Artistas");
 	}
 
