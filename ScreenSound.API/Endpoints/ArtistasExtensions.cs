@@ -35,9 +35,17 @@ public static class ArtistasExtensions
             return Results.Ok(EntityToResponse(artista));
         });
 
-        app.MapPost("/Artistas", ([FromServices] DAL<Artista> dal, [FromBody] ArtistaRequest artistaRequest) =>
+        app.MapPost("/Artistas", async ([FromServices] IHostEnvironment env, [FromServices] DAL<Artista> dal, [FromBody] ArtistaRequest artistaRequest) =>
         {
-            Artista artista = new(artistaRequest.Nome, artistaRequest.Bio, artistaRequest.FotoPerfil);
+            string nome = artistaRequest.Nome.Trim();
+            string imagemArtista = $"{DateTime.Now.ToString("ddMMyyyyhhss")}.{nome}.jpeg";
+            string path = Path.Combine(env.ContentRootPath, "wwwroot", "FotosPerfil", imagemArtista);
+
+            using MemoryStream ms = new MemoryStream(Convert.FromBase64String(artistaRequest.FotoPerfil!));
+            using FileStream fs = new(path, FileMode.Create);
+            await ms.CopyToAsync(fs);
+
+            Artista artista = new(artistaRequest.Nome, artistaRequest.Bio, imagemArtista);
             dal.Adicionar(artista);
             return Results.Ok();
         });
