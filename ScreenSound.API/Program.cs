@@ -36,6 +36,7 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(
 
 var app = builder.Build();
 app.UseCors();
+app.UseStaticFiles();
 
 app.AddEndpointsArtistas();
 app.AddEndpointsMusicas();

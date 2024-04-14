@@ -45,7 +45,7 @@ public static class ArtistasExtensions
             using FileStream fs = new(path, FileMode.Create);
             await ms.CopyToAsync(fs);
 
-            Artista artista = new(artistaRequest.Nome, artistaRequest.Bio, imagemArtista);
+            Artista artista = new(artistaRequest.Nome, artistaRequest.Bio, $"FotosPerfil/{imagemArtista}");
             dal.Adicionar(artista);
             return Results.Ok();
         });
