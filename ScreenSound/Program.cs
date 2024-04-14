@@ -1,8 +1,14 @@
-﻿using ScreenSound.Banco;
+﻿using Microsoft.EntityFrameworkCore;
+using ScreenSound.Banco;
 using ScreenSound.Menus;
 using ScreenSound.Shared.Modelos.Modelos;
 
-ScreenSoundContext context = new();
+DbContextOptions options = new DbContextOptionsBuilder<ScreenSoundContext>()
+	            .UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ScreenSoundV0;Integrated Security=True;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False")
+	            .UseLazyLoadingProxies()
+	            .Options;
+
+ScreenSoundContext context = new(options);
 DAL<Artista> artistaDAL = new(context);
 
 Dictionary<int, Menu> opcoes = new()
