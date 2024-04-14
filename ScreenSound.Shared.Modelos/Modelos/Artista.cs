@@ -1,11 +1,11 @@
 ﻿namespace ScreenSound.Shared.Modelos.Modelos;
 
-public class Artista(string nome, string bio)
+public class Artista(string nome, string bio, string? fotoPerfil)
 {
     public virtual ICollection<Musica> Musicas { get; set; } = [];
 
     public string Nome { get; set; } = nome;
-    public string FotoPerfil { get; set; } = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png";
+    public string FotoPerfil { get; set; } = !String.IsNullOrWhiteSpace(fotoPerfil)? fotoPerfil : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png";
     public string Bio { get; set; } = bio;
     public int Id { get; set; }
 

@@ -72,7 +72,7 @@ else
 	}
 	private async Task Editar()
 	{
-		ArtistaRequestEdit requestEdit = new ArtistaRequestEdit(Artista!.Id, nome!, biografia!);
+		ArtistaRequestEdit requestEdit = new ArtistaRequestEdit(Artista!.Id, nome!, biografia!, null);
 		await artistasAPI.UpdateArtistaAsync(requestEdit);
 		navigationManager.NavigateTo("/Artistas");
 	}

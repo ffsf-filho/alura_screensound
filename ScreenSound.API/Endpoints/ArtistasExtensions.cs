@@ -37,7 +37,7 @@ public static class ArtistasExtensions
 
         app.MapPost("/Artistas", ([FromServices] DAL<Artista> dal, [FromBody] ArtistaRequest artistaRequest) =>
         {
-            Artista artista = new(artistaRequest.nome, artistaRequest.bio);
+            Artista artista = new(artistaRequest.Nome, artistaRequest.Bio, artistaRequest.FotoPerfil);
             dal.Adicionar(artista);
             return Results.Ok();
         });
@@ -67,7 +67,7 @@ public static class ArtistasExtensions
 
             artista.Nome = artistaRequestEdit.Nome;
             artista.Bio = artistaRequestEdit.Bio;
-            //artista.FotoPerfil = artistaRequestEdit.FotoPerfil;
+            artista.FotoPerfil = artistaRequestEdit.FotoPerfil;
 
             dal.Atualizar(artista);
 

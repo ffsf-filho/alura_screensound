@@ -57,7 +57,7 @@
 
 	private async Task Cadastrar()
 	{
-		ArtistaRequest request = new ArtistaRequest(nome!, biografia!);
+		ArtistaRequest request = new ArtistaRequest(nome!, biografia!, fileImage);
 		await artistasAPI.AddArtistaAsync(request);
 		navigationManager.NavigateTo("/Artistas");
 	}
