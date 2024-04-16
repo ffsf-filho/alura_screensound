@@ -9,10 +9,10 @@ public class GeneroAPI(IHttpClientFactory factory)
 
     public async Task<List<GeneroResponse>?> GetGenerosAsync()
     {
-        return await _httpClient.GetFromJsonAsync<List<GeneroResponse>>("generos");
+        return await _httpClient.GetFromJsonAsync<List<GeneroResponse>>("Generos");
     }
     public async Task<GeneroResponse?> GetGeneroPorNomeAsync(string nome)
     {
-        return await _httpClient.GetFromJsonAsync<GeneroResponse>($"generos/{nome}");
+        return await _httpClient.GetFromJsonAsync<GeneroResponse>($"Generos/{nome}");
     }
 }
