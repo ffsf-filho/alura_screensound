@@ -1,6 +1,8 @@
 ﻿@page "/CadastrarMusica"
 @inject ArtistasAPI artistasAPI
 @inject GeneroAPI generoAPI
+@inject MusicasAPI musicaAPI
+@inject NavigationManager navigationManager
 
 <MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8" Justify="Justify.Center">
     <MudText Class="mt-8" Typo="Typo.h4">Cadastro de Música</MudText>
@@ -20,7 +22,7 @@
                 }
             }
         </MudSelect>
-        <MudTextField Class="mt-4" Placeholder="Ano de lançamento"
+        <MudTextField Class="mt-4" T="int" Placeholder="Ano de lançamento"
                       @bind-Value="anoLancamento"
                       Variant="Variant.Outlined"
                       Lines="1"
@@ -36,9 +38,9 @@
                 }
             }
 
-            @if (GenerosSelecionado is not null)
+            @if (GenerosSelecionados is not null)
             {
-                foreach (GeneroResponse genero in GenerosSelecionado)
+                foreach (GeneroResponse genero in GenerosSelecionados)
                 {
                     <MudAlert Severity="Severity.Info">
                         @(genero.Nome) adicionado como gênero da música.
@@ -49,6 +51,7 @@
         <div class="d-flex align-center justify-space-between mt-4">
             <MudButton Variant="Variant.Filled"
                        Color="Color.Primary"
+                       @onclick="Cadastrar"
                        Class="ml-auto">
                 Cadastrar
             </MudButton>
@@ -68,8 +71,9 @@
     private ICollection<ArtistaResponse>? artistas;
     private ICollection<GeneroResponse>? generos;
 
-    private List<GeneroResponse>? GenerosSelecionado { get; set; } = new();
+    private List<GeneroResponse>? GenerosSelecionados { get; set; } = new();
     private ArtistaResponse? ArtistaDaMusica { get; set; }
+    private List<GeneroRequest> GenerosRequest { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -84,12 +88,28 @@
 
     private void GeneroSelecionado(GeneroResponse genero)
     {
-        if(GenerosSelecionado is not null)
+        if(GenerosSelecionados is not null)
         {
-            if (!GenerosSelecionado.Contains(genero))
+            if (!GenerosSelecionados.Contains(genero))
             {
-                GenerosSelecionado.Add(genero);
+                GenerosSelecionados.Add(genero);
             }
         }
+    }
+
+    public async Task Cadastrar()
+    {
+        if(GenerosSelecionados is not null)
+        {
+            foreach (GeneroResponse genero in GenerosSelecionados)
+            {
+                GenerosRequest.Add(new GeneroRequest(genero.Nome, genero.Descricao));
+            }
+        }
+
+        MusicaRequest musicaRequest = new(nome!, ArtistaDaMusica!.Id, anoLancamento, GenerosRequest);
+        await musicaAPI.AddMusicaAsync(musicaRequest);
+
+        navigationManager.NavigateTo("/MusicasPorArtista");
     }
 }
