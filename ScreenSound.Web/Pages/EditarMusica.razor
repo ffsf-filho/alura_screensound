@@ -1,7 +1,140 @@
-﻿@page "/EditarMusica"
+﻿@page "/EditarMusica/{NomeMusica}"
 
-<h3>EditarMusica</h3>
+@inject ArtistasAPI artistasAPI
+@inject GeneroAPI generoAPI
+@inject MusicasAPI musicaAPI
+@inject NavigationManager navigationManager
+
+<MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8" Justify="Justify.Center">
+    <MudText Class="mt-8" Typo="Typo.h4">Edição de Música</MudText>
+    <MudForm>
+        <MudTextField Class="mt-4" T="string" Placeholder="Nome da música/canção"
+                      @bind-Value="nome"
+                      Variant="Variant.Outlined"
+                      Required="true"
+                      RequiredError="Campo obrigatório." />
+        <MudSelect Class="mt-4" T="ArtistaResponse" Label="Artistas"
+                   Variant="Variant.Outlined" ValueChanged="ArtistaSelecionado" AnchorOrigin="Origin.BottomCenter">
+            @if (artistas is not null)
+            {
+                //
+                @foreach (ArtistaResponse artista in artistas)
+                {
+
+                     <MudSelectItem Value="@artista" />
+                }
+            }
+        </MudSelect>
+        <MudTextField Class="mt-4" T="int" Placeholder="Ano de lançamento"
+                      @bind-Value="anoLancamento"
+                      Variant="Variant.Outlined"
+                      Lines="1"
+                      Required="true"
+                      RequiredError="Campo obrigatório." />
+        <MudSelect Class="mt-4" T="GeneroResponse" Label="Gêneros"
+                   Variant="Variant.Outlined" ValueChanged="GeneroSelecionado" AnchorOrigin="Origin.BottomCenter">
+            @if (generos is not null)
+            {
+                @foreach (var genero in generos)
+                {
+                    <MudSelectItem Value="genero" />
+                }
+            }
+
+            @if (GenerosSelecionados is not null)
+            {
+                foreach (GeneroResponse genero in GenerosSelecionados)
+                {
+                    <MudAlert Severity="Severity.Info">
+                        @(genero.Nome) adicionado como gênero da música.
+                    </MudAlert>
+                }
+            }
+        </MudSelect>
+        <div class="d-flex align-center justify-space-between mt-4">
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Info"
+                       @onclick="VoltarMusicasPorArtista"
+                       Class="ml-3">
+                Voltar
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       @onclick="Salvar"
+                       Class="ml-auto">
+                Salvar
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Secondary"
+                       @onclick="Deletar"
+                       Class="ml-auto">
+                Deletar
+            </MudButton>
+        </div>
+    </MudForm>
+</MudPaper>
 
 @code {
+    private string? nome;
+    private string? genero;
+    private int anoLancamento;
 
+    private ICollection<ArtistaResponse>? artistas;
+    private ICollection<GeneroResponse>? generos;
+
+    private List<GeneroResponse>? GenerosSelecionados { get; set; } = new();
+    private List<GeneroRequest> GenerosRequest { get; set; } = new();
+
+    private ArtistaResponse? ArtistaDaMusica { get; set; }
+    private MusicaResponse? Musica { get; set; }
+
+    [Parameter] public string? NomeMusica { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //vai popular os combos de artistas é genero
+        artistas = await artistasAPI.GetArtistasAsync()!;
+        generos = await generoAPI.GetGenerosAsync();
+
+        Musica = await musicaAPI.GetMusicaPorNomeAsync(NomeMusica!);
+        anoLancamento = Musica!.AnoLancamento;
+        nome = Musica.Nome;
+        ArtistaDaMusica = new(Musica.ArtistaId, Musica.NomeArtista, "", "");
+        ArtistaSelecionado(ArtistaDaMusica);
+    }
+
+    private void ArtistaSelecionado(ArtistaResponse artista)
+    {
+        ArtistaDaMusica = artista;
+    }
+
+    private void GeneroSelecionado(GeneroResponse genero)
+    {
+        if (GenerosSelecionados is not null)
+        {
+            if (!GenerosSelecionados.Contains(genero))
+            {
+                GenerosSelecionados.Add(genero);
+            }
+        }
+    }
+
+    public async Task Salvar()
+    {
+        MusicaRequestEdit musicaRequestEdit = new(Musica!.Id, Musica.Nome, ArtistaDaMusica!.Id, Musica.AnoLancamento);
+        await musicaAPI.UpdateMusicaAsync(musicaRequestEdit);
+        navigationManager.NavigateTo("/MusicasPorArtista");
+    }
+
+    public async Task Deletar()
+    {
+        await musicaAPI.DeleteMusicaAsync(Musica!.Id);
+
+        navigationManager.NavigateTo("/MusicasPorArtista");
+    }
+
+    private void VoltarMusicasPorArtista()
+    {
+        navigationManager.NavigateTo("/MusicasPorArtista");
+    }
 }

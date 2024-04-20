@@ -13,8 +13,23 @@ public class MusicasAPI(IHttpClientFactory factory)
 		return await _httpClient.GetFromJsonAsync<ICollection<MusicaResponse>>("Musicas");
 	}
 
-	public async Task AddMusicaAsync(MusicaRequest musica)
+	public async Task<MusicaResponse?> GetMusicaPorNomeAsync(string nomeDaMusica)
+	{
+		return await _httpClient.GetFromJsonAsync<MusicaResponse>($"Musicas/{nomeDaMusica}")!;
+	}
+
+    public async Task AddMusicaAsync(MusicaRequest musica)
 	{
 		await _httpClient.PostAsJsonAsync("Musicas", musica);
+	}
+
+	public async Task DeleteMusicaAsync(int id)
+	{
+		await _httpClient.DeleteAsync($"Musicas/{id}");
+	}
+
+	public async Task UpdateMusicaAsync(MusicaRequestEdit artista)
+	{
+		await _httpClient.PutAsJsonAsync($"Musicas", artista);
 	}
 }
