@@ -7,6 +7,12 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.ConfigureAppConfiguration(config =>
+{
+    var settings = config.Build();
+    config.AddAzureAppConfiguration("Endpoint=https://screensoundfco-configuration.azconfig.io;Id=r5mV;Secret=1glVJfWcm9kqBDet8ev6CkuI1l4fqUeM9/EXO1DKbvM=");
+});
+
 builder.Services.AddDbContext<ScreenSoundContext>((options) =>
 {
     options
